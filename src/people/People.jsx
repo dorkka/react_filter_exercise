@@ -13,10 +13,12 @@ class People extends Component {
   _showPeopleList = () => {
     const { peopleList, filterQuery } = this.props
     const pattern = new RegExp(filterQuery, 'i')
-    const filtredPeoole = filter(peopleList, person => pattern.test(person.name))
-    const peopleListToDisplay = filtredPeoole.map((person) => <div className='App-box' key={person.id}>{person.name}</div>)
-    return peopleListToDisplay
+    const filtredPeople = filter(peopleList, person => pattern.test(person.name))
+    return filtredPeople.map((person) => (
+      <div className='App-box' key={person.id}>{person.name}</div>
+    ))
   }
+  
   render() {
     return (
       <div>
@@ -30,7 +32,5 @@ const mapStateToProps = (state) => ({
   peopleList: state.people.people,
   filterQuery: state.people.filterQuery
 });
-const mapDispatchToProps = dispatch => bindActionCreators({
-}, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(People);
+export default connect(mapStateToProps)(People);
