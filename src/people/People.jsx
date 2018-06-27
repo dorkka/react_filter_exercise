@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {filter} from 'lodash';
+import { filter } from 'lodash';
 
 class People extends Component {
   static propTypes = {
     peopleList: PropTypes.array,
-    filterQuery:PropTypes.string,
+    filterQuery: PropTypes.string,
   };
 
-  _showPeopleList= () => {
+  _showPeopleList = () => {
     const { peopleList, filterQuery } = this.props
-    const filtredPeoole = filter( peopleList, person => person.name.includes(filterQuery) )
+    const pattern = new RegExp(filterQuery, 'i')
+    const filtredPeoole = filter(peopleList, person => pattern.test(person.name))
     const peopleListToDisplay = filtredPeoole.map((person) => <div className='App-box' key={person.id}>{person.name}</div>)
     return peopleListToDisplay
   }
